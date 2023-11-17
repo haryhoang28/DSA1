@@ -1,0 +1,162 @@
+package homework3.ex3;
+
+import java.util.NoSuchElementException;
+
+public class SimpleLinkedList<T>{
+    class Node {
+        T data;
+        Node next;
+    }
+    private Node top = null;
+    private Node bot = null;
+    private int n = 0;
+    public void add(T data) {
+        Node newNode = new Node();
+        newNode.data = data;
+
+        if (top == null) {
+            top = newNode;
+            bot = newNode;
+        } else {
+            newNode.next = top;
+            top = newNode;
+        }
+        n++;
+
+    }
+    public void addBot(T data) {
+        Node newNode = new Node();
+        newNode.data = data;
+
+        if (isEmpty()) {
+            top = newNode;
+            bot = newNode;
+        } else {
+            bot.next = newNode;
+            bot = newNode;
+        }
+        n++;
+    }
+    public T get(int i) {
+        if (i >= size() || i < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node current = top;
+
+        for (int currentIndex = 0; currentIndex < i; currentIndex++) {
+            current = current.next;
+        }
+        return current.data;
+    }
+    public void set(int i, T data) {
+        if (i < 0 || i >= size()) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        Node currentNode = top;
+        for (int j = 0; j < i; j++) {
+            currentNode = currentNode.next;
+        }
+        currentNode.data = data;
+    }
+    public boolean isContain(T data) {
+        Node currentNode = top;
+        for (int i = 0; i < size(); i++) {
+            if (currentNode.data.equals(data)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public int size() {
+        return n;
+    }
+    public boolean isEmpty() {
+        Node currentNode = top;
+        for (int i = 0; i < size(); i++) {
+            if (currentNode == null) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public T removeTop() {
+//        Node currentNode = top;
+//        for (int i = 0; i < size(); i++) {
+//            currentNode = currentNode.next;
+//        }
+//        currentNode.data = currentNode.next.data;
+//        currentNode.data = null;
+//        return
+        if (isEmpty()) {
+            throw new NoSuchElementException("List is empty");
+        }
+
+        T removeData = top.data;
+        top = top.next;
+        n--;
+
+        if (isEmpty()) {
+            bot = null;
+        }
+        return removeData;
+    }
+    public T removeBot() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("List is empty");
+        }
+
+        T removeData;
+
+        if (top == bot) {
+            removeData = top.data;
+            top = null;
+            bot = null;
+        }
+        else {
+            Node currentNode = top;
+            while (currentNode.next != bot) {
+                currentNode = currentNode.next;
+            }
+            removeData = bot.data;
+            currentNode.next = null;
+            bot = currentNode;
+        }
+        n--;
+        return removeData;
+    }
+    public void remove(T data) {
+        if (isEmpty()) {
+            return;
+        }
+        if (top.data.equals(data)) {
+            top = top.next;
+            n--;
+            if (top == null) {
+                bot = null;
+            }
+            return;
+        }
+        Node preNode = top;
+        Node currentNode = top.next;
+
+        while (currentNode != null) {
+            if (currentNode.data.equals(data)) {
+                preNode.next = currentNode.next;
+                n--;
+                if (currentNode == bot) {
+                    bot = preNode;
+                }
+                return;
+            }
+            preNode = currentNode;
+            currentNode = currentNode.next;
+        }
+    }
+    public void print() {
+        Node node = top;
+        while (node != null) {
+            System.out.print(node.data + " ");
+            node = node.next;
+        }
+    }
+}
