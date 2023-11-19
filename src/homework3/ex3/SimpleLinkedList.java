@@ -1,15 +1,25 @@
 package homework3.ex3;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SimpleLinkedList<T>{
-    class Node {
-        T data;
-        Node next;
+    public class Node {
+        public T data;
+        public Node next;
+
+        public Node(T data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
+
+        public Node() {
+        }
     }
-    private Node top = null;
-    private Node bot = null;
-    private int n = 0;
+    public Node top = null;
+    public Node bot = null;
+    public int n = 0;
+
     public void add(T data) {
         Node newNode = new Node();
         newNode.data = data;
@@ -158,5 +168,23 @@ public class SimpleLinkedList<T>{
             System.out.print(node.data + " ");
             node = node.next;
         }
+    }
+    public Iterator<T> iterator() {
+        Iterator<T> iterator = new Iterator<T>() {
+            Node head = top;
+            @Override
+            public boolean hasNext() {
+                return head != null;
+            }
+
+            @Override
+            public T next() {
+                T current = head.data;
+                head = head.next;
+                return current;
+            }
+
+        };
+        return iterator;
     }
 }

@@ -3,8 +3,8 @@ package homework3.ex2;
 import java.util.Iterator;
 
 public class SimpleArrayList<T> implements ListInterface<T>{
-    private T[] array;
-    private int n = 0;
+    public T[] array;
+    public int n = 0;
     private int defaultSize = 100;
 
     public SimpleArrayList() {
