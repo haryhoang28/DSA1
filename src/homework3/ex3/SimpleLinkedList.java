@@ -81,13 +81,7 @@ public class SimpleLinkedList<T>{
         return n;
     }
     public boolean isEmpty() {
-        Node currentNode = top;
-        for (int i = 0; i < size(); i++) {
-            if (currentNode == null) {
-                return true;
-            }
-        }
-        return false;
+        return top == null;
     }
     public T removeTop() {
 //        Node currentNode = top;
